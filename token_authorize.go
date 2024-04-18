@@ -14,6 +14,7 @@ type authorizeToken struct {
 	token       string
 	tokenValid  time.Time
 	tokenSingle singleflight.Group
+	record      map[string]any
 }
 
 func newAuthorizeToken(c *resty.Client, url string, token string) authStore {
@@ -28,9 +29,10 @@ func newAuthorizeToken(c *resty.Client, url string, token string) authStore {
 
 func (a *authorizeToken) authorize() error {
 	type authResponse struct {
-		Token string `json:"token"`
+		Token  string         `json:"token"`
+		Record map[string]any `json:"record"`
 	}
-	_, err, _ := a.tokenSingle.Do("auth-refresh", func() (interface{}, error) {
+	_, err, _ := a.tokenSingle.Do("auth-refresh", func() (any, error) {
 		if time.Now().Before(a.tokenValid) {
 			return nil, nil
 		}
@@ -53,6 +55,7 @@ func (a *authorizeToken) authorize() error {
 		a.token = auth.Token
 		a.client.SetHeader("Authorization", auth.Token)
 		a.tokenValid = time.Now().Add(60 * time.Minute)
+		a.record = auth.Record
 		return nil, nil
 	})
 	return err
@@ -64,4 +67,8 @@ func (a *authorizeToken) IsValid() bool {
 
 func (a *authorizeToken) Token() string {
 	return a.token
+}
+
+func (a *authorizeToken) Record() map[string]any {
+	return a.record
 }

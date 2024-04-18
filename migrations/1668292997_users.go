@@ -51,7 +51,7 @@ func init() {
 		}
 
 		return dao.SaveRecord(r)
-	}, func(db dbx.Builder) error {
+	}, func(_ dbx.Builder) error {
 		return nil
 	})
 }

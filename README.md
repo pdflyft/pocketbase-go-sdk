@@ -1,4 +1,4 @@
-[![Check & test & build](https://github.com/pluja/pocketbase/actions/workflows/main.yml/badge.svg)](https://github.com/pluja/pocketbase/actions/workflows/main.yml)
+[![Check & test & build](https://github.com/habibrosyad/pocketbase-go-sdk/actions/workflows/main.yml/badge.svg)](https://github.com/habibrosyad/pocketbase-go-sdk/actions/workflows/main.yml)
 [![PocketBase](https://pocketbase.io/images/logo.svg)](https://pocketbase.io)
 
 ### Project
@@ -31,6 +31,7 @@ This SDK doesn't have feature parity with official SDKs and supports the followi
 * **Update**
 * **Delete**
 * **List** - with pagination, filtering, sorting
+* **Backupd** - with create, restore, delete, upload, download and list all available downloads
 * **Other** - feel free to create an issue or contribute
 
 ### Usage & examples
@@ -43,7 +44,7 @@ package main
 import (
 	"log"
 
-	"github.com/pluja/pocketbase"
+	"github.com/habibrosyad/pocketbase-go-sdk"
 )
 
 func main() {
@@ -78,7 +79,7 @@ package main
 import (
 	"log"
 
-	"github.com/pluja/pocketbase"
+	"github.com/habibrosyad/pocketbase-go-sdk"
 )
 
 func main() {
@@ -101,7 +102,7 @@ package main
 import (
 	"log"
 
-	"github.com/pluja/pocketbase"
+	"github.com/habibrosyad/pocketbase-go-sdk"
 )
 
 type post struct {
@@ -142,7 +143,7 @@ package main
 import (
 	"log"
 
-	"github.com/pluja/pocketbase"
+	"github.com/habibrosyad/pocketbase-go-sdk"
 )
 
 type post struct {
@@ -173,6 +174,28 @@ func main() {
 }
 ```
 
+Trigger to create a new backup.
+
+```go
+package main
+
+import (
+	"log"
+
+	"github.com/pluja/pocketbase"
+)
+
+func main() {
+	client := pocketbase.NewClient("http://localhost:8090", 
+		pocketbase.WithAdminEmailPassword("admin@admin.com", "admin@admin.com"))
+	err := client.Backup().Create("foobar.zip")
+	if err != nil {
+	    log.Println("create new backup failed")
+		log.Fatal(err)
+	}
+}
+```
+
 More examples can be found in:
 * [example file](./example/main.go)
 * [tests for the client](./client_test.go)
@@ -189,7 +212,7 @@ More examples can be found in:
 * `make help` - shows help and other targets
 
 ## Contributing
-* Go 1.20+ (for making changes in the Go code)
+* Go 1.21+ (for making changes in the Go code)
 * While developing use `WithDebug()` client option to see HTTP requests and responses
 * Make sure that all checks are green (run `make check` before commit)
 * Make sure that all tests pass (run `make test` before commit)

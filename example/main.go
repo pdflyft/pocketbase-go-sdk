@@ -5,8 +5,8 @@ import (
 	"log"
 	"time"
 
+	"github.com/habibrosyad/pocketbase-go-sdk"
 	"github.com/mitchellh/mapstructure"
-	"github.com/pluja/pocketbase"
 )
 
 type Post struct {

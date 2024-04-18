@@ -6,13 +6,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/pluja/pocketbase/migrations"
+	"github.com/habibrosyad/pocketbase-go-sdk/migrations"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestCollection_Subscribe(t *testing.T) {
 	client := NewClient(defaultURL)
-	defaultBody := map[string]interface{}{
+	defaultBody := map[string]any{
 		"field": "value_" + time.Now().Format(time.StampMilli),
 	}
 	collection := Collection[map[string]any]{client, migrations.PostsPublic}
@@ -44,7 +44,7 @@ func TestCollection_Subscribe(t *testing.T) {
 			return
 		}
 		<-ch // ignore create event
-		body := map[string]interface{}{
+		body := map[string]any{
 			"field": "value_" + time.Now().Format(time.StampMilli),
 		}
 		err = collection.Update(resp.ID, body)
@@ -77,7 +77,7 @@ func TestCollection_Subscribe(t *testing.T) {
 
 func TestCollection_Unsubscribe(t *testing.T) {
 	client := NewClient(defaultURL)
-	defaultBody := map[string]interface{}{
+	defaultBody := map[string]any{
 		"field": "value_" + time.Now().Format(time.StampMilli),
 	}
 	collection := Collection[map[string]any]{client, migrations.PostsPublic}
@@ -128,7 +128,7 @@ func TestCollection_RealtimeReconnect(t *testing.T) {
 		},
 	}
 	client.client.SetTransport(transport)
-	defaultBody := map[string]interface{}{
+	defaultBody := map[string]any{
 		"field": "value_" + time.Now().Format(time.StampMilli),
 	}
 	collection := Collection[map[string]any]{client, migrations.PostsPublic}

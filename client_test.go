@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/pluja/pocketbase/migrations"
+	"github.com/habibrosyad/pocketbase-go-sdk/migrations"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -332,7 +332,7 @@ func TestClient_Update(t *testing.T) {
 
 func TestClient_Create(t *testing.T) {
 	defaultClient := NewClient(defaultURL)
-	defaultBody := map[string]interface{}{
+	defaultBody := map[string]any{
 		"field": "value_" + time.Now().Format(time.StampMilli),
 	}
 

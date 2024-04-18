@@ -12,6 +12,7 @@ type authStore interface {
 	authorizer
 	IsValid() bool
 	Token() string
+	Record() map[string]any
 }
 
 type authorizer interface {
@@ -32,6 +33,10 @@ func (a authorizeNoOp) Token() string {
 	return ""
 }
 
+func (a authorizeNoOp) Record() map[string]any {
+	return nil
+}
+
 type authorizeEmailPassword struct {
 	email       string
 	password    string
@@ -40,6 +45,7 @@ type authorizeEmailPassword struct {
 	client      *resty.Client
 	url         string
 	tokenSingle singleflight.Group
+	record      map[string]any
 }
 
 func newAuthorizeEmailPassword(c *resty.Client, url string, email string, password string) authStore {
@@ -54,17 +60,18 @@ func newAuthorizeEmailPassword(c *resty.Client, url string, email string, passwo
 
 func (a *authorizeEmailPassword) authorize() error {
 	type authResponse struct {
-		Token string `json:"token"`
+		Token  string         `json:"token"`
+		Record map[string]any `json:"record"`
 	}
 
-	_, err, _ := a.tokenSingle.Do("auth", func() (interface{}, error) {
+	_, err, _ := a.tokenSingle.Do("auth", func() (any, error) {
 		if time.Now().Before(a.tokenValid) {
 			return nil, nil
 		}
 
 		resp, err := a.client.R().
 			SetHeader("Content-Type", "application/json").
-			SetBody(map[string]interface{}{
+			SetBody(map[string]any{
 				"identity": a.email,
 				"password": a.password,
 			}).
@@ -88,6 +95,7 @@ func (a *authorizeEmailPassword) authorize() error {
 		a.token = auth.Token
 		a.client.SetHeader("Authorization", auth.Token)
 		a.tokenValid = time.Now().Add(60 * time.Minute)
+		a.record = auth.Record
 
 		return nil, nil
 	})
@@ -100,4 +108,8 @@ func (a *authorizeEmailPassword) IsValid() bool {
 
 func (a *authorizeEmailPassword) Token() string {
 	return a.token
+}
+
+func (a *authorizeEmailPassword) Record() map[string]any {
+	return a.record
 }

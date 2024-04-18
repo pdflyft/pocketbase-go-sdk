@@ -1,4 +1,4 @@
-module github.com/pluja/pocketbase
+module github.com/habibrosyad/pocketbase-go-sdk
 
 go 1.21.3
 

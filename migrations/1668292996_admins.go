@@ -40,7 +40,7 @@ func init() {
 		}
 
 		return dao.SaveAdmin(&admin)
-	}, func(db dbx.Builder) error {
+	}, func(_ dbx.Builder) error {
 		return nil
 	})
 }
