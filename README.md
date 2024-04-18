@@ -1,29 +1,28 @@
+# PocketBase Go SDK
 [![Check & test & build](https://github.com/habibrosyad/pocketbase-go-sdk/actions/workflows/main.yml/badge.svg)](https://github.com/habibrosyad/pocketbase-go-sdk/actions/workflows/main.yml)
-[![PocketBase](https://pocketbase.io/images/logo.svg)](https://pocketbase.io)
 
-### Project
-This repository contains community-maintained Go SDK for Pocketbase API. Not all endpoints are covered yet, if you need some particular endpoint or feature, please feel free to open a Pull Request.
+[PocketBase](https://pocketbase.io) is a simple, self-hosted, open-source, no-code, database for your personal data.
+It's a great alternative to Airtable, Notion, and Google Sheets. Source code is available on [GitHub](https://github.com/pocketbase/pocketbase)
+
+## Sample Project
+This repository contains community-maintained Go SDK for PocketBase API. Not all endpoints are covered yet, if you need some particular endpoint or feature, please feel free to open a Pull Request.
 It's well-tested and used in production in:
 - [Coinpaprika](https://coinpaprika.com)
 - [KYCNOT.me](https://kycnot.me)
 
-### Compatibility
-* `v0.22.0` version of SDK is compatible with Pocketbase v0.22.x
-* `v0.21.0` version of SDK is compatible with Pocketbase v0.21.x
-* `v0.20.0` version of SDK is compatible with Pocketbase v0.20.x
-* `v0.19.0` version of SDK is compatible with Pocketbase v0.19.x
-* `v0.13.0` version of SDK is compatible with Pocketbase v0.13.x and higher
-* `v0.12.0` version of SDK is compatible with Pocketbase v0.12.x
-* `v0.11.0` version of SDK is compatible with Pocketbase v0.11.x
-* `v0.10.1` version of SDK is compatible with Pocketbase v0.10.x
-* `v0.9.2` version of SDK is compatible with Pocketbase v0.9.x (SSE & generics support introduced)
-* `v0.8.0` version of SDK is compatible with Pocketbase v0.8.x
+## Compatibility
+* `v0.22.0` version of SDK is compatible with PocketBase v0.22.x
+* `v0.21.0` version of SDK is compatible with PocketBase v0.21.x
+* `v0.20.0` version of SDK is compatible with PocketBase v0.20.x
+* `v0.19.0` version of SDK is compatible with PocketBase v0.19.x
+* `v0.13.0` version of SDK is compatible with PocketBase v0.13.x and higher
+* `v0.12.0` version of SDK is compatible with PocketBase v0.12.x
+* `v0.11.0` version of SDK is compatible with PocketBase v0.11.x
+* `v0.10.1` version of SDK is compatible with PocketBase v0.10.x
+* `v0.9.2` version of SDK is compatible with PocketBase v0.9.x (SSE & generics support introduced)
+* `v0.8.0` version of SDK is compatible with PocketBase v0.8.x
 
-### PocketBase
-[Pocketbase](https://pocketbase.io) is a simple, self-hosted, open-source, no-code, database for your personal data.
-It's a great alternative to Airtable, Notion, and Google Sheets. Source code is available on [GitHub](https://github.com/pocketbase/pocketbase)
-
-### Currently supported operations
+## Currently Supported Operations
 This SDK doesn't have feature parity with official SDKs and supports the following operations:
 
 * **Authentication** - anonymous, admin and user via email/password
@@ -34,8 +33,7 @@ This SDK doesn't have feature parity with official SDKs and supports the followi
 * **Backupd** - with create, restore, delete, upload, download and list all available downloads
 * **Other** - feel free to create an issue or contribute
 
-### Usage & examples
-
+## Usage and Examples
 Simple list example without authentication (assuming your collections are public):
 
 ```go
@@ -200,7 +198,7 @@ More examples can be found in:
 * [example file](./example/main.go)
 * [tests for the client](./client_test.go)
 * [tests for the collection](./collection_test.go)
-* remember to start the Pocketbase before running examples with `make serve` command
+* remember to start the PocketBase before running examples with `make serve` command
 
 ## Development
 
