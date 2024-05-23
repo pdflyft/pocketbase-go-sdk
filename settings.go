@@ -11,22 +11,22 @@ type (
 	}
 
 	ResponseSettingsAll struct {
-		Meta *Meta `json:"meta"`
-		Smtp *Smtp `json:"smtp"`
+		Meta *MetaConfig `json:"meta"`
+		Smtp *SmtpConfig `json:"smtp"`
 	}
 
-	Smtp struct {
+	SmtpConfig struct {
 		Enabled    bool   `json:"enabled"`
 		Host       string `host:"host"`
 		Port       int    `json:"port"`
 		Username   string `json:"username"`
 		Password   string `json:"password"`
-		TLS        bool   `json:"tls"`
+		Tls        bool   `json:"tls"`
 		AuthMethod string `json:"authMethod"`
 		LocalName  string `json:"localName"`
 	}
 
-	Meta struct {
+	MetaConfig struct {
 		AppName       string `json:"appName"`
 		AppUrl        string `json:"appUrl"`
 		SenderName    string `json:"senderName"`
@@ -35,22 +35,53 @@ type (
 )
 
 // All returns all settings.
-func (b Settings) All() (ResponseSettingsAll, error) {
+func (s Settings) All() (ResponseSettingsAll, error) {
 	var response ResponseSettingsAll
-	if err := b.Authorize(); err != nil {
+	if err := s.Authorize(); err != nil {
 		return response, err
 	}
 
-	request := b.client.R().
+	request := s.client.R().
 		SetHeader("Content-Type", "application/json")
 
-	resp, err := request.Get(b.url + "/api/settings")
+	resp, err := request.Get(s.url + "/api/settings")
 	if err != nil {
-		return response, fmt.Errorf("[settings] can't send all request to pocketbase, err %w", err)
+		return response, fmt.Errorf("[settings] can't send get settings request to pocketbase, err %w", err)
 	}
 
 	if resp.IsError() {
-		return response, fmt.Errorf("[settings] pocketbase returned status: %d, msg: %s, err %w",
+		return response, fmt.Errorf("[settings] pocketbase returned status at getting all settings: %d, msg: %s, err %w",
+			resp.StatusCode(),
+			resp.String(),
+			ErrInvalidResponse,
+		)
+	}
+
+	if err := json.Unmarshal(resp.Body(), &response); err != nil {
+		return response, fmt.Errorf("[settings] can't unmarshal response, err %w", err)
+	}
+
+	return response, nil
+}
+
+func (s Settings) Update(body ResponseSettingsAll) (ResponseSettingsAll, error) {
+	var response ResponseSettingsAll
+
+	if err := s.Authorize(); err != nil {
+		return response, err
+	}
+
+	request := s.client.R().
+		SetHeader("Content-Type", "application/json")
+	request = request.SetBody(body)
+
+	resp, err := request.Patch(s.url + "/api/settings")
+	if err != nil {
+		return response, fmt.Errorf("[settings] can't send update settings request to pocketbase, err %w", err)
+	}
+
+	if resp.IsError() {
+		return response, fmt.Errorf("[settings] pocketbase returned status at updating settings: %d, msg: %s, err %w",
 			resp.StatusCode(),
 			resp.String(),
 			ErrInvalidResponse,
