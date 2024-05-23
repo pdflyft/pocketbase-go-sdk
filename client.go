@@ -255,6 +255,12 @@ func (c *Client) Backup() Backup {
 	}
 }
 
+func (c *Client) Settings() Settings {
+	return Settings{
+		Client: c,
+	}
+}
+
 func (c *Client) Files() Files {
 	return Files{
 		Client: c,
