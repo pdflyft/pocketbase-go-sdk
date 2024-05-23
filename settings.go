@@ -11,6 +11,7 @@ type (
 	}
 
 	ResponseSettingsAll struct {
+		Meta *Meta `json:"meta"`
 		Smtp *Smtp `json:"smtp"`
 	}
 
@@ -23,6 +24,13 @@ type (
 		TLS        bool   `json:"tls"`
 		AuthMethod string `json:"authMethod"`
 		LocalName  string `json:"localName"`
+	}
+
+	Meta struct {
+		AppName       string `json:"appName"`
+		AppUrl        string `json:"appUrl"`
+		SenderName    string `json:"senderName"`
+		SenderAddress string `json:"senderAddress"`
 	}
 )
 
