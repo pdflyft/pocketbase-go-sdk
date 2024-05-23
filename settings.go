@@ -64,7 +64,7 @@ func (s Settings) All() (ResponseSettingsAll, error) {
 	return response, nil
 }
 
-func (s Settings) Update(body ResponseSettingsAll) (ResponseSettingsAll, error) {
+func (s Settings) Update(body any) (ResponseSettingsAll, error) {
 	var response ResponseSettingsAll
 
 	if err := s.Authorize(); err != nil {
