@@ -27,10 +27,18 @@ type (
 	}
 
 	MetaConfig struct {
-		AppName       string `json:"appName"`
-		AppUrl        string `json:"appUrl"`
-		SenderName    string `json:"senderName"`
-		SenderAddress string `json:"senderAddress"`
+		AppName                    string        `json:"appName"`
+		AppUrl                     string        `json:"appUrl"`
+		SenderName                 string        `json:"senderName"`
+		SenderAddress              string        `json:"senderAddress"`
+		VerificationTemplate       EmailTemplate `json:"verificationTemplate"`
+		ResetPasswordTemplate      EmailTemplate `json:"resetPasswordTemplate"`
+		ConfirmEmailChangeTemplate EmailTemplate `json:"confirmEmailChangeTemplate"`
+	}
+
+	EmailTemplate struct {
+		Body    string `json:"body"`
+		Subject string `json:"subject"`
 	}
 )
 
