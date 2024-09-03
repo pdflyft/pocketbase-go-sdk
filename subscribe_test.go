@@ -15,7 +15,7 @@ func TestCollection_Subscribe(t *testing.T) {
 	defaultBody := map[string]any{
 		"field": "value_" + time.Now().Format(time.StampMilli),
 	}
-	collection := Collection[map[string]any]{client, migrations.PostsPublic}
+	collection := Collection[map[string]any]{client, migrations.PostsPublic, client.url + "/api/collections/collectionname"}
 	stream, err := collection.Subscribe()
 	if err != nil {
 		t.Error(err)
@@ -80,7 +80,7 @@ func TestCollection_Unsubscribe(t *testing.T) {
 	defaultBody := map[string]any{
 		"field": "value_" + time.Now().Format(time.StampMilli),
 	}
-	collection := Collection[map[string]any]{client, migrations.PostsPublic}
+	collection := Collection[map[string]any]{client, migrations.PostsPublic, client.url + "/api/collections/collectionname"}
 	stream, err := collection.Subscribe()
 	if err != nil {
 		t.Error(err)
@@ -131,7 +131,7 @@ func TestCollection_RealtimeReconnect(t *testing.T) {
 	defaultBody := map[string]any{
 		"field": "value_" + time.Now().Format(time.StampMilli),
 	}
-	collection := Collection[map[string]any]{client, migrations.PostsPublic}
+	collection := Collection[map[string]any]{client, migrations.PostsPublic, client.url + "/api/collections/collectionname"}
 	stream, err := collection.Subscribe()
 	if err != nil {
 		t.Error(err)

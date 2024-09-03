@@ -30,7 +30,11 @@ This SDK doesn't have feature parity with official SDKs and supports the followi
 * **Update**
 * **Delete**
 * **List** - with pagination, filtering, sorting
+<<<<<<< HEAD
 * **Backupd** - with create, restore, delete, upload, download and list all available downloads
+=======
+* **Backups** - with create, restore, delete, upload, download and list all available downloads
+>>>>>>> upstream/master
 * **Other** - feel free to create an issue or contribute
 
 ## Usage and Examples
@@ -172,6 +176,64 @@ func main() {
 }
 ```
 
+You can fetch a single record by its ID using the `One` method to get the raw map, or the `OneTo` method to unmarshal directly into a custom struct.
+
+Here's an example of fetching a single record as a map:
+
+```go
+package main
+
+import (
+	"log"
+
+	"github.com/pluja/pocketbase"
+)
+
+func main() {
+	client := pocketbase.NewClient("http://localhost:8090")
+
+	// Fetch a single record by ID
+	record, err := client.One("posts_public", "record_id")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Access the record fields
+	log.Print(record["field"])
+}
+```
+
+You can fetch and unmarshal a single record directly into your custom struct using `OneTo`:
+
+```go
+package main
+
+import (
+	"log"
+
+	"github.com/pluja/pocketbase"
+)
+
+type Post struct {
+	ID    string `json:"id"`
+	Field string `json:"field"`
+}
+
+func main() {
+	client := pocketbase.NewClient("http://localhost:8090")
+
+	// Fetch a single record by ID and unmarshal into struct
+	var post Post
+	err := client.OneTo("posts", "post_id", &post)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Access the struct fields
+	log.Printf("Fetched Post: %+v\n", post)
+}
+```
+
 Trigger to create a new backup.
 
 ```go
@@ -191,6 +253,38 @@ func main() {
 	    log.Println("create new backup failed")
 		log.Fatal(err)
 	}
+}
+```
+
+
+Authenticate user from collection
+
+```go
+package main
+
+import (
+	"log"
+
+	"github.com/pluja/pocketbase"
+)
+
+type User struct {
+	AuthProviders    []interface{} `json:"authProviders"`
+	UsernamePassword bool          `json:"usernamePassword"`
+	EmailPassword    bool          `json:"emailPassword"`
+	OnlyVerified     bool          `json:"onlyVerified"`
+}
+
+func main() {
+	client := pocketbase.NewClient("http://localhost:8090")
+	response, err := pocketbase.CollectionSet[User](client, "users").AuthWithPassword("user", "user@user.com")
+	if err != nil {
+		log.Println("user-authentication failed")
+		log.Fatal(err)
+		return
+	}
+	log.Println("authentication successful")
+	log.Printf("JWT-token: %s\n", response.Token)
 }
 ```
 

@@ -17,6 +17,7 @@ type (
 		client     *resty.Client
 		url        string
 		authorizer authStore
+		token      string
 	}
 	ClientOption func(*Client)
 )
@@ -156,6 +157,68 @@ func (c *Client) Delete(collection string, id string) error {
 			resp.String(),
 			ErrInvalidResponse,
 		)
+	}
+
+	return nil
+}
+
+func (c *Client) One(collection string, id string) (map[string]any, error) {
+	var response map[string]any
+
+	if err := c.Authorize(); err != nil {
+		return response, err
+	}
+
+	request := c.client.R().
+		SetHeader("Content-Type", "application/json").
+		SetPathParam("collection", collection).
+		SetPathParam("id", id)
+
+	resp, err := request.Get(c.url + "/api/collections/{collection}/records/{id}")
+	if err != nil {
+		return response, fmt.Errorf("[one] can't send get request to pocketbase, err %w", err)
+	}
+
+	if resp.IsError() {
+		return response, fmt.Errorf("[one] pocketbase returned status: %d, msg: %s, err %w",
+			resp.StatusCode(),
+			resp.String(),
+			ErrInvalidResponse,
+		)
+	}
+
+	if err := json.Unmarshal(resp.Body(), &response); err != nil {
+		return response, fmt.Errorf("[one] can't unmarshal response, err %w", err)
+	}
+
+	return response, nil
+}
+
+func (c *Client) OneTo(collection string, id string, result any) error {
+	if err := c.Authorize(); err != nil {
+		return err
+	}
+
+	request := c.client.R().
+		SetHeader("Content-Type", "application/json").
+		SetPathParam("collection", collection).
+		SetPathParam("id", id)
+
+	resp, err := request.Get(c.url + "/api/collections/{collection}/records/{id}")
+	if err != nil {
+		return fmt.Errorf("[oneTo] can't send get request to pocketbase, err %w", err)
+	}
+
+	if resp.IsError() {
+		return fmt.Errorf("[oneTo] pocketbase returned status: %d, msg: %s, err %w",
+			resp.StatusCode(),
+			resp.String(),
+			ErrInvalidResponse,
+		)
+	}
+
+	if err := json.Unmarshal(resp.Body(), result); err != nil {
+		return fmt.Errorf("[oneTo] can't unmarshal response, err %w", err)
 	}
 
 	return nil

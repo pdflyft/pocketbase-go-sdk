@@ -19,7 +19,7 @@ type Event[T any] struct {
 	Error  error  `json:"-"`
 }
 
-func (c Collection[T]) Subscribe(targets ...string) (*Stream[T], error) {
+func (c *Collection[T]) Subscribe(targets ...string) (*Stream[T], error) {
 	opts := SubscribeOptions{
 		ReconnectStrategy: &backoff.ZeroBackOff{},
 	}
@@ -30,7 +30,7 @@ type SubscribeOptions struct {
 	ReconnectStrategy backoff.BackOff
 }
 
-func (c Collection[T]) SubscribeWith(opts SubscribeOptions, targets ...string) (*Stream[T], error) {
+func (c *Collection[T]) SubscribeWith(opts SubscribeOptions, targets ...string) (*Stream[T], error) {
 	if err := c.Authorize(); err != nil {
 		return nil, err
 	}
@@ -109,7 +109,7 @@ type SubscriptionsSet struct {
 	Subscriptions []string `json:"subscriptions"`
 }
 
-func (c Collection[T]) authSubscribeStream(data []byte, targets []string) (err error) {
+func (c *Collection[T]) authSubscribeStream(data []byte, targets []string) (err error) {
 	var s SubscriptionsSet
 	if err = json.Unmarshal(data, &s); err != nil {
 		return
