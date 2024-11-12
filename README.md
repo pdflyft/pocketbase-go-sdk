@@ -186,7 +186,7 @@ package main
 import (
 	"log"
 
-	"github.com/pluja/pocketbase"
+	"github.com/habibrosyad/pocketbase-go-sdk"
 )
 
 func main() {
@@ -211,7 +211,7 @@ package main
 import (
 	"log"
 
-	"github.com/pluja/pocketbase"
+	"github.com/habibrosyad/pocketbase-go-sdk"
 )
 
 type Post struct {
@@ -242,7 +242,7 @@ package main
 import (
 	"log"
 
-	"github.com/pluja/pocketbase"
+	"github.com/habibrosyad/pocketbase-go-sdk"
 )
 
 func main() {
@@ -265,7 +265,7 @@ package main
 import (
 	"log"
 
-	"github.com/pluja/pocketbase"
+	"github.com/habibrosyad/pocketbase-go-sdk"
 )
 
 type User struct {
