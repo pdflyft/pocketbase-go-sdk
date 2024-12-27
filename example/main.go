@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/habibrosyad/pocketbase-go-sdk"
+	"github.com/pdflyft/pocketbase-go-sdk"
 	"github.com/mitchellh/mapstructure"
 )
 

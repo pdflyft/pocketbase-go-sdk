@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/pocketbase/pocketbase"
 
-	_ "github.com/habibrosyad/pocketbase-go-sdk/migrations"
+	_ "github.com/pdflyft/pocketbase-go-sdk/migrations"
 )
 
 func main() {

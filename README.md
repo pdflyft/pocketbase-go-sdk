@@ -1,43 +1,48 @@
 # PocketBase Go SDK
-[![Check & test & build](https://github.com/habibrosyad/pocketbase-go-sdk/actions/workflows/main.yml/badge.svg)](https://github.com/habibrosyad/pocketbase-go-sdk/actions/workflows/main.yml)
+
+[![Check & test & build](https://github.com/pdflyft/pocketbase-go-sdk/actions/workflows/main.yml/badge.svg)](https://github.com/pdflyft/pocketbase-go-sdk/actions/workflows/main.yml)
 
 [PocketBase](https://pocketbase.io) is a simple, self-hosted, open-source, no-code, database for your personal data.
 It's a great alternative to Airtable, Notion, and Google Sheets. Source code is available on [GitHub](https://github.com/pocketbase/pocketbase)
 
 ## Sample Project
+
 This repository contains community-maintained Go SDK for PocketBase API. Not all endpoints are covered yet, if you need some particular endpoint or feature, please feel free to open a Pull Request.
 It's well-tested and used in production in:
+
 - [Coinpaprika](https://coinpaprika.com)
 - [KYCNOT.me](https://kycnot.me)
 
 ## Compatibility
-* `v0.22.0` version of SDK is compatible with PocketBase v0.22.x
-* `v0.21.0` version of SDK is compatible with PocketBase v0.21.x
-* `v0.20.0` version of SDK is compatible with PocketBase v0.20.x
-* `v0.19.0` version of SDK is compatible with PocketBase v0.19.x
-* `v0.13.0` version of SDK is compatible with PocketBase v0.13.x and higher
-* `v0.12.0` version of SDK is compatible with PocketBase v0.12.x
-* `v0.11.0` version of SDK is compatible with PocketBase v0.11.x
-* `v0.10.1` version of SDK is compatible with PocketBase v0.10.x
-* `v0.9.2` version of SDK is compatible with PocketBase v0.9.x (SSE & generics support introduced)
-* `v0.8.0` version of SDK is compatible with PocketBase v0.8.x
+
+- `v0.22.0` version of SDK is compatible with PocketBase v0.22.x
+- `v0.21.0` version of SDK is compatible with PocketBase v0.21.x
+- `v0.20.0` version of SDK is compatible with PocketBase v0.20.x
+- `v0.19.0` version of SDK is compatible with PocketBase v0.19.x
+- `v0.13.0` version of SDK is compatible with PocketBase v0.13.x and higher
+- `v0.12.0` version of SDK is compatible with PocketBase v0.12.x
+- `v0.11.0` version of SDK is compatible with PocketBase v0.11.x
+- `v0.10.1` version of SDK is compatible with PocketBase v0.10.x
+- `v0.9.2` version of SDK is compatible with PocketBase v0.9.x (SSE & generics support introduced)
+- `v0.8.0` version of SDK is compatible with PocketBase v0.8.x
 
 ## Currently Supported Operations
+
 This SDK doesn't have feature parity with official SDKs and supports the following operations:
 
-* **Authentication** - anonymous, admin and user via email/password
-* **Create** 
-* **Update**
-* **Delete**
-* **List** - with pagination, filtering, sorting
-<<<<<<< HEAD
-* **Backupd** - with create, restore, delete, upload, download and list all available downloads
-=======
-* **Backups** - with create, restore, delete, upload, download and list all available downloads
->>>>>>> upstream/master
-* **Other** - feel free to create an issue or contribute
+- **Authentication** - anonymous, admin and user via email/password
+- **Create**
+- **Update**
+- **Delete**
+- **List** - with pagination, filtering, sorting
+  <<<<<<< HEAD
+- # **Backupd** - with create, restore, delete, upload, download and list all available downloads
+- **Backups** - with create, restore, delete, upload, download and list all available downloads
+  > > > > > > > upstream/master
+- **Other** - feel free to create an issue or contribute
 
 ## Usage and Examples
+
 Simple list example without authentication (assuming your collections are public):
 
 ```go
@@ -46,7 +51,7 @@ package main
 import (
 	"log"
 
-	"github.com/habibrosyad/pocketbase-go-sdk"
+	"github.com/pdflyft/pocketbase-go-sdk"
 )
 
 func main() {
@@ -72,7 +77,8 @@ func main() {
 	log.Print(response.TotalItems)
 }
 ```
-Creating an item with admin user (auth via email/pass). 
+
+Creating an item with admin user (auth via email/pass).
 Please note that you can pass `map[string]any` or `struct with JSON tags` as a payload:
 
 ```go
@@ -81,11 +87,11 @@ package main
 import (
 	"log"
 
-	"github.com/habibrosyad/pocketbase-go-sdk"
+	"github.com/pdflyft/pocketbase-go-sdk"
 )
 
 func main() {
-	client := pocketbase.NewClient("http://localhost:8090", 
+	client := pocketbase.NewClient("http://localhost:8090",
 		pocketbase.WithAdminEmailPassword("admin@admin.com", "admin@admin.com"))
 	response, err := client.Create("posts_admin", map[string]any{
 		"field": "test",
@@ -96,6 +102,7 @@ func main() {
 	log.Print(response.ID)
 }
 ```
+
 For even easier interaction with collection results as user-defined types, you can go with `CollectionSet`:
 
 ```go
@@ -104,7 +111,7 @@ package main
 import (
 	"log"
 
-	"github.com/habibrosyad/pocketbase-go-sdk"
+	"github.com/pdflyft/pocketbase-go-sdk"
 )
 
 type post struct {
@@ -132,7 +139,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	
+
     log.Printf("%+v", response.Items)
 }
 ```
@@ -145,7 +152,7 @@ package main
 import (
 	"log"
 
-	"github.com/habibrosyad/pocketbase-go-sdk"
+	"github.com/pdflyft/pocketbase-go-sdk"
 )
 
 type post struct {
@@ -163,7 +170,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	
+
 	stream, err := collection.Subscribe()
 	if err != nil {
 		log.Fatal(err)
@@ -186,7 +193,7 @@ package main
 import (
 	"log"
 
-	"github.com/habibrosyad/pocketbase-go-sdk"
+	"github.com/pdflyft/pocketbase-go-sdk"
 )
 
 func main() {
@@ -211,7 +218,7 @@ package main
 import (
 	"log"
 
-	"github.com/habibrosyad/pocketbase-go-sdk"
+	"github.com/pdflyft/pocketbase-go-sdk"
 )
 
 type Post struct {
@@ -242,11 +249,11 @@ package main
 import (
 	"log"
 
-	"github.com/habibrosyad/pocketbase-go-sdk"
+	"github.com/pdflyft/pocketbase-go-sdk"
 )
 
 func main() {
-	client := pocketbase.NewClient("http://localhost:8090", 
+	client := pocketbase.NewClient("http://localhost:8090",
 		pocketbase.WithAdminEmailPassword("admin@admin.com", "admin@admin.com"))
 	err := client.Backup().Create("foobar.zip")
 	if err != nil {
@@ -256,7 +263,6 @@ func main() {
 }
 ```
 
-
 Authenticate user from collection
 
 ```go
@@ -265,7 +271,7 @@ package main
 import (
 	"log"
 
-	"github.com/habibrosyad/pocketbase-go-sdk"
+	"github.com/pdflyft/pocketbase-go-sdk"
 )
 
 type User struct {
@@ -289,23 +295,26 @@ func main() {
 ```
 
 More examples can be found in:
-* [example file](./example/main.go)
-* [tests for the client](./client_test.go)
-* [tests for the collection](./collection_test.go)
-* remember to start the PocketBase before running examples with `make serve` command
+
+- [example file](./example/main.go)
+- [tests for the client](./client_test.go)
+- [tests for the collection](./collection_test.go)
+- remember to start the PocketBase before running examples with `make serve` command
 
 ## Development
 
-### Makefile targets 
-* `make serve` - builds all binaries and runs local PocketBase server, it will create collections and sample data based on [migration files](./migrations)
-* `make test` - runs tests (make sure that PocketBase server is running - `make serve` before)
-* `make check` - runs linters and security checks (run this before commit)
-* `make build` - builds all binaries (examples and PocketBase server) 
-* `make help` - shows help and other targets
+### Makefile targets
+
+- `make serve` - builds all binaries and runs local PocketBase server, it will create collections and sample data based on [migration files](./migrations)
+- `make test` - runs tests (make sure that PocketBase server is running - `make serve` before)
+- `make check` - runs linters and security checks (run this before commit)
+- `make build` - builds all binaries (examples and PocketBase server)
+- `make help` - shows help and other targets
 
 ## Contributing
-* Go 1.21+ (for making changes in the Go code)
-* While developing use `WithDebug()` client option to see HTTP requests and responses
-* Make sure that all checks are green (run `make check` before commit)
-* Make sure that all tests pass (run `make test` before commit)
-* Create a PR with your changes and wait for review
+
+- Go 1.21+ (for making changes in the Go code)
+- While developing use `WithDebug()` client option to see HTTP requests and responses
+- Make sure that all checks are green (run `make check` before commit)
+- Make sure that all tests pass (run `make test` before commit)
+- Create a PR with your changes and wait for review
