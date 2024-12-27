@@ -1,4 +1,4 @@
-module github.com/habibrosyad/pocketbase-go-sdk
+module github.com/pdflyft/pocketbase-go-sdk
 
 go 1.22.0
 
