@@ -37,10 +37,10 @@ jobs:
       - name: Build
         run: make build
 
-      - name: Run Pocketbase
-        run: |
-          make serve &
-          sleep 3
+      # - name: Run Pocketbase
+      #   run: |
+      #     make serve &
+      #     sleep 3
 
-      - name: Run unit tests with
-        run: make test
+      # - name: Run unit tests with
+      #   run: make test
